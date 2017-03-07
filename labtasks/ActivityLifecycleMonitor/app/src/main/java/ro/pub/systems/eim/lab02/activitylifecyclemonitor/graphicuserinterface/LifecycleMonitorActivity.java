@@ -57,12 +57,84 @@ public class LifecycleMonitorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lifecycle_monitor);
 
+
+
+
         Button okButton = (Button) findViewById(R.id.ok_button);
         okButton.setOnClickListener(buttonClickListener);
         Button cancelButton = (Button) findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(buttonClickListener);
 
-        Log.d(Constants.TAG, "onCreate() method was invoked without a previous state");
+        EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+        if (savedInstanceState != null) {
+
+            usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+            Log.d(Constants.TAG, "onCreate() method was invoked with a previous state");
+        }
+        else {
+            Log.d(Constants.TAG, "onCreate() method was invoked without a previous state");
+        }
     }
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d(Constants.TAG, "onStart method was invoked");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(Constants.TAG, "onResume method was invoked");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(Constants.TAG, "onPause method was invoked");
+
+    }
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        // apelarea metodei din activitatea parinte este recomandata, dar nu obligatorie
+        // ...
+        EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+        Log.d(Constants.TAG, usernameEditText.getText().toString());
+        savedInstanceState.putString(Constants.USERNAME_EDIT_TEXT, usernameEditText.getText().toString());
+        Log.d(Constants.TAG, "onsaveinstance method was invoked");
+        super.onSaveInstanceState(savedInstanceState);
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(Constants.TAG, "onStop method was invoked");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(Constants.TAG, "onDestroy method was invoked");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(Constants.TAG, "onRestart method was invoked");
+    }
+
+
+    /*
+    @Override protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        // apelarea metodei din activitatea parinte este recomandata, dar nu obligatorie
+        super.onRestoreInstanceState(savedInstanceState);
+        EditText usernameEditText= (EditText)findViewById(R.id.username_edit_text);
+        if (savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT) != null) {
+            usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+        }
+        Log.d(Constants.TAG, "onRestoreInstanceState method was invoked");
+
+    }
+    */
 }
